@@ -6,8 +6,14 @@ const request = require('request');
 
 const id = `${process.argv[2]}`;
 
-request.get(`https://swapi-api.alx-tools.com/api/films/${id}`, { encoding: 'utf-8' })
-  .on('data', (data) => {
-    const response = JSON.parse(data);
-    console.log(response.title);
-  });
+const url = `https://swapi-api.alx-tools.com/api/films/${id}`;
+
+request.get({ url, json: true }, (error, response, data) => {
+  if (error) {
+    console.error('Error:', error);
+  } else if (response.statusCode !== 200) {
+    console.error('HTTP Error:', response.statusCode);
+  } else {
+    console.log(data.title);
+  }
+});
