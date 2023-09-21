@@ -5,7 +5,7 @@
 const request = require('request');
 
 // API URL for the JSON data
-const url = 'https://jsonplaceholder.typicode.com/todos';
+const url = process.argv[2];
 
 request(url, { json: true }, (error, response, body) => {
   if (error) {
