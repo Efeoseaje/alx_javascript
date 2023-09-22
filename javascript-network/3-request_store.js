@@ -8,12 +8,13 @@ const fs = require('fs');
 const url = process.argv[2];
 const filePath = process.argv[3];
 
-request(url, (error, response, body) => {
-  if (!error && response.statusCode === 200) {
-    fs.writeFile(filePath, body, { encoding: 'utf-8' }, (err) => {
-      if (err) {
-        console.error(`Error writing to ${filePath}: ${err}`);
-      }
-    });
-  }
-});
+request.get(url)
+  .on('response', response => {
+    if (response.statusCode !== 200) {
+      console.error('HTTP error:', response.statusCode);
+    }
+  })
+  .on('error', err => {
+    console.error(err);
+  })
+  .pipe(fs.createWriteStream(filePath));
