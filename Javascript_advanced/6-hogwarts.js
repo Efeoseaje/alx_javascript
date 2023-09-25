@@ -36,6 +36,7 @@ console.log(harry.getScore());
 const draco = studentHogwarts();
 draco.setName('Draco');
 draco.rewardStudent();
+// use loop to penalize Draco 3 times
 for (let i = 0; i < 3; i++) {
   draco.penalizeStudent();
 }
