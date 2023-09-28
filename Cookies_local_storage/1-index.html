@@ -18,14 +18,16 @@
     <h1>Cookies</h1>
     <button onclick="showCookies()">Show the cookies</button>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
   <script>
     const setCookies = () => {
-      const firstname = document.querySelector('#firstname').value
-      const email = document.querySelector('#email').value
+      const firstname = document.querySelector('#firstname').value;
+      const email = document.querySelector('#email').value;
+      const expires = new Date();
+      expires.setTime(expires.getTime() + (10 * 24 * 60 * 60 * 1000));
+      let expire = 'expires='+ expires.toUTCString();
 
-      Cookies.set('firstname', firstname, { expires: 10, path: '' });
-      Cookies.set('email', email, { expires: 10, path: '' });
+      document.cookie = `firstname=${firstname}; ${expire}; path=/`;
+      document.cookie = `email=${email}; ${expire}; path=/`;
     }
     const showCookies = () => {
       const cookies = document.cookie;
