@@ -19,6 +19,9 @@
     <h1>Cookies</h1>
     <button onclick="showCookies()">Show the cookies</button>
   </div>
+  <script src="
+    https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js">
+  </script>
   <script>
     const setCookies = () => {
       const firstname = document.querySelector('#firstname').value;
@@ -32,20 +35,7 @@
     }
 
     const getCookie = (name) => {
-      // split the cookie string into individual cookies
-      const cookies = document.cookie.split('; ')
-
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim(); // Remove leading and trailing spaces
-        const cookieParts = cookie.split('=');
-        const cookieName = cookieParts[0];
-
-        if (cookieName === name) {
-          // If the cookie with the given name is found, return its value
-          return cookieParts[1];
-        }
-      }
-      return '';
+      return Cookies.get(name) || '';
     }
 
     const showCookies = () => {
@@ -81,12 +71,16 @@
 
     const deleteCookiesAndShowForm = () => {
       // delete cookies
-      document.cookie = 'firstname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-      document.cookie = 'email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+      Cookies.remove('email');
+      Cookies.remove('firstname');
 
       showForm();
     }
 
+    const setCookiesAndShowWelcomeMessage = () => {
+      setCookies();
+      showWelcomeMessageOrForm();
+    }
     const showWelcomeMessageOrForm = () => {
       const firstname = getCookie('firstname');
       const email = getCookie('email');
@@ -118,6 +112,7 @@
         if (welcomeMessageContainer) {
           welcomeMessageContainer.innerHTML = "";
           welcomeMessageContainer.append(welcome);
+
         } else {
           document.body.appendChild(welcome);
       }
@@ -125,10 +120,6 @@
         loginForm.style.display = 'block';
         showForm();
       }
-    }
-    const setCookiesAndShowMessage = () => {
-      setCookies();
-      showWelcomeMessageOrForm();
     }
     
   </script>
