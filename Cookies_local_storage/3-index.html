@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="welcomeMessageContainer"></div>
+  <div id="loginFormContainer">
+    <h2>Login to the website</h2>
+    <input type="text" id="firstname" placeholder="Firstname">
+    <input type="text" id="email" placeholder="Email">
+    <button onclick="setCookiesAndShowMessage()">Log me in</button>
+  </div>
+  <div>
+    <h1>Cookies</h1>
+    <button onclick="showCookies()">Show the cookies</button>
+  </div>
+  <script>
+    const setCookies = () => {
+      const firstname = document.querySelector('#firstname').value;
+      const email = document.querySelector('#email').value;
+      const expires = new Date();
+      expires.setTime(expires.getTime() + (10 * 24 * 60 * 60 * 1000));
+      let expire = 'expires=' + expires.toUTCString();
+
+      document.cookie = `firstname=${firstname}; ${expire}; path=/`;
+      document.cookie = `email=${email}; ${expire}; path=/`;
+    }
+
+    const getCookie = (name) => {
+      // split the cookie string into individual cookies
+      const cookies = document.cookie.split('; ')
+
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim(); // Remove leading and trailing spaces
+        const cookieParts = cookie.split('=');
+        const cookieName = cookieParts[0];
+
+        if (cookieName === name) {
+          // If the cookie with the given name is found, return its value
+          return cookieParts[1];
+        }
+      }
+      return '';
+    }
+
+    const showCookies = () => {
+      const email = getCookie('email');
+      const firstname = getCookie('firstname')
+
+      const cookiesParagraph = document.createElement("p");
+      cookiesParagraph.id = 'cookiesParagraph'
+      cookiesParagraph.innerHTML = `Email: ${email} - Firstname: ${firstname}`;
+      document.body.appendChild(cookiesParagraph);
+    }
+
+    const showForm = () => {
+      // remove welcome message if it exists
+      removeWelcome();
+
+      // show login form
+      const loginForm = document.querySelector('#loginFormContainer');
+      loginForm.style.display = 'block';
+    }
+
+    const hideForm = () => {
+      const loginForm = document.querySelector('#loginFormContainer');
+      loginForm.style.display = 'none';
+    }
+
+    const removeWelcome = () => {
+        const welcomeMessage = document.querySelector('#welcomeMessageContainer');
+        if (welcomeMessage) {
+          welcomeMessage.remove();
+        }
+    }
+
+    const deleteCookiesAndShowForm = () => {
+      // delete cookies
+      document.cookie = 'firstname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+      document.cookie = 'email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+
+      showForm();
+    }
+
+    const showWelcomeMessageOrForm = () => {
+      const firstname = getCookie('firstname');
+      const email = getCookie('email');
+      const loginForm = document.querySelector('#loginFormContainer');
+
+      if (firstname && email) {
+        loginForm.style.display = 'none';
+
+        const welcome = document.createElement('h1');
+        welcome.id = 'welcome';
+        const message = document.createTextNode(` Welcome ${firstname} `); // create the welcome message
+        welcome.appendChild(message);
+        
+
+        // create logout link
+        const logout = document.createElement('a');
+        logout.textContent = '(logout)';
+        logout.style.fontWeight = 'normal';
+        logout.style.fontStyle = 'italic';
+        logout.style.marginLeft = '10px';
+        logout.href = '#';
+        logout.addEventListener('click', () => {
+          removeWelcome();
+          deleteCookiesAndShowForm();
+        });
+        welcome.appendChild(logout);
+
+        const welcomeMessageContainer = document.querySelector('#welcomeMessageContainer');
+        if (welcomeMessageContainer) {
+          welcomeMessageContainer.innerHTML = "";
+          welcomeMessageContainer.append(welcome);
+
+        } else {
+          document.body.appendChild(welcome);
+      }
+      } else {
+        loginForm.style.display = 'block';
+        showForm();
+      }
+    }
+    const setCookiesAndShowMessage = () => {
+      setCookies();
+      showWelcomeMessageOrForm();
+    }
+    
+  </script>
+</body>
+
+</html>
