@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <style>
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      width: 500px;
+      margin-bottom: 10px;
+    }
+    .sub-group {
+      display: inline-flex;
+      margin-right: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Subscription Form</h1>
+  <form action="">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="user_name" required>
+      </div>
+      <div class="form-group">
+        <label for="mail">Email address:</label>
+        <input type="email" id="mail" name="user_email" required>
+      </div>
+  
+      <div class="sub-group">
+        <label for="monthly">Monthly</label>
+        <input type="radio" id="monthly" name="subscription">
+      </div>
+      <div class="sub-group">
+        <label for="yearly">Yearly</label>
+        <input type="radio" id="yearly" name="subscription">
+      </div>
+      <br>
+      <br>
+      <div>
+        <input type="submit" value="submit">
+      </div>
+  </form>
+</body>
+</html>
