@@ -10,7 +10,9 @@ const validatePassword = () => {
 
   const password = passwordE.value.trim();
 
-  if (!isPasswordSecure(password)) {
+  if (!isRequired(password)) {
+    blankError();
+  } else if (!isPasswordSecure(password)) {
     showError();
   } else {
     showSuccess();
@@ -28,9 +30,15 @@ const showError = () => {
   errorMessage.textContent = 'Password must has at least 8 characters that include at least 1 lowercase character, 1 uppercase characters, 1 number, and 1 special character in (!@#$%^&*)';
 };
 
+const blankError = () => {
+  errorMessage.textContent = 'Password cannot be blank';
+};
+
 const showSuccess = () => {
   errorMessage.textContent = '';
 };
+
+const isRequired = (value) => value !== '';
 
 // Add an event listener to the form to validate password on submission
 const passwordForm = document.querySelector('#passwordForm');
