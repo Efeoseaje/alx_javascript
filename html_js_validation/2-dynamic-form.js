@@ -13,34 +13,34 @@ function generateInputFields (num) {
 }
 
 // Function to validate the form before submission
-function validateForm(event) {
+function validateForm (event) {
   event.preventDefault(); // Prevent the form from submitting by default
 
-  const numFields = parseInt(document.getElementById("numFields").value);
-  const inputContainer = document.getElementById("inputContainer");
-  const inputs = inputContainer.getElementsByTagName("input");
+  const numFields = parseInt(document.getElementById('numFields').value);
+  const inputContainer = document.getElementById('inputContainer');
+  const inputs = inputContainer.getElementsByTagName('input');
 
   let isValid = true;
 
   for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].value.trim() === "") {
-          isValid = false;
-          break; // Stop checking if any field is empty
-      }
+    if (inputs[i].value.trim() === '') {
+      isValid = false;
+      break; // Stop checking if any field is empty
+    }
   }
   if (!isValid) {
-    alert("Please fill in all fields");
+    alert('Please fill in all fields');
   } else {
     // If all fields are filled, you can submit the form
-    document.getElementById("dynamicForm").submit();
+    document.getElementById('dynamicForm').submit();
   }
 }
 
 // Event listener for dropdown change
-document.getElementById("numFields").addEventListener("change", function () {
-const selectedValue = parseInt(this.value);
-generateInputFields(selectedValue);
+document.getElementById('numFields').addEventListener('change', function () {
+  const selectedValue = parseInt(this.value);
+  generateInputFields(selectedValue);
 });
 
 // Event listener for form submission
-document.getElementById("dynamicForm").addEventListener("submit", validateForm);
+document.getElementById('dynamicForm').addEventListener('submit', validateForm);
